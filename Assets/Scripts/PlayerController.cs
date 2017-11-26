@@ -10,14 +10,23 @@ public class PlayerController : MonoBehaviour {
 	public int speed = 5;
 	public Boundary bnd = new Boundary();
 	public int tilt = 4;
-	// Use this for initialization
-	void Start () {
+    public GameObject shot;
+    public Transform shotSpawn;
+    public int amountOfShots = 1; //Upgrades will alow the player to shoot more than one bean at a time
+    private float nextFire = 0.0F;
+    public float fireRate;
+    void Start () {
 		rb=GetComponent<Rigidbody>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
+	void Update ()
+    {
+        if (Input.GetButton("Fire1") && Time.time > nextFire)
+        {
+            nextFire = Time.time + fireRate;
+            Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+        }
+        
 	}
 
 	void FixedUpdate () 
