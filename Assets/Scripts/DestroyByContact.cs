@@ -12,8 +12,7 @@ public class DestroyByContact : MonoBehaviour {
 
         Instantiate(explosion, transform.position, transform.rotation);
 
-        /*if (other.tag == "Player")
-            Instantiate(playerExplosion, other.transform.position, other.transform.rotation);*/
+        //GetComponent<AudioSource>().Play();
         Destroy(other.gameObject);
         Destroy(gameObject);
     }
