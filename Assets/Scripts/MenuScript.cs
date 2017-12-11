@@ -38,7 +38,7 @@ public class MenuScript : MonoBehaviour
 		UnityWebRequest www = UnityWebRequest.Get ("localhost:8080/uploadScores"); 
 		leaderboradText.text = ipF.text;
 
-		if(www.isError) {
+		if(www.isNetworkError) {
             Debug.Log(www.error);
         }
         else {

@@ -5,7 +5,7 @@ namespace AssemblyCSharp
 	[System.Serializable]
 	public struct Boundary
 	{
-		public int xMin,xMax,zMin,zMax;
+		public float xMin,xMax,zMin,zMax;
 	}
 }
 

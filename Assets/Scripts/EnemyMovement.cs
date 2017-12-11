@@ -9,10 +9,10 @@ public class EnemyMovement : MonoBehaviour
     
 	void Update() 
 	{
-		if (target == null)
+		if (target == null) //If there is no object to move, just return
 			return;
         float step = speed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, target.position, step);
+        transform.position = Vector3.MoveTowards(transform.position, target.position, step); //Moves the object on the Z axis i.e down the screen
     }
 
 }
