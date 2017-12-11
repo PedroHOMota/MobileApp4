@@ -10,12 +10,19 @@ public class MenuScript : MonoBehaviour
 
     public Button startButton;
     public Button exitButton;
+	public InputField ipF;
+	public Text leaderboradText;
 
 	void Start()
     {
-		Debug.Log("Carregou");
-        startButton = startButton.GetComponent<Button>();
+		startButton = startButton.GetComponent<Button>();
         exitButton = exitButton.GetComponent<Button>();
+
+		if (ipF != null) //If null it means that the current scene is the main menu
+						 // So there isn't any leaderboard to load
+		{
+			GetLeaderboard ();
+		}
 	}
     public void StartLevel() 
     {
@@ -26,18 +33,36 @@ public class MenuScript : MonoBehaviour
 		Debug.Log("Chamou");
         Application.Quit(); //Exits the game
     }
-
-	public void Test()
+	public void GetLeaderboard()//make a query to the webapi and loads the json 
 	{
+		UnityWebRequest www = UnityWebRequest.Get ("localhost:8080/uploadScores"); 
+		leaderboradText.text = ipF.text;
+
+		if(www.isError) {
+            Debug.Log(www.error);
+        }
+        else {
+            // Show results as text
+            Debug.Log(www.downloadHandler.text);
+ 
+            //byte[] results = www.downloadHandler.data;
+        }
+	}
+
+	public void UploadScore() //Uploads user's score and reload game
+	{
+		ipF=ipF.GetComponent<InputField>();
+
+
 		WWWForm form = new WWWForm();
-		form.AddField("username", "Stan");
-		form.AddField("userscore", "123456");
+		form.AddField("username", ipF.text);
+		form.AddField("userscore", ScoreClass.score);
 
 		
 		UnityWebRequest www = UnityWebRequest.Post ("localhost:8080/uploadScores",form);
 		www.Send();
 
-		Debug.Log("Chamou");
+		StartLevel();
 	}
 
 }

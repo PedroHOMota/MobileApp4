@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -14,8 +15,7 @@ public class GameController : MonoBehaviour
     public GUIText gameOverText;
 
     private bool gameOver, restart;
-    private int score=0;
-
+    
     void Start ()
     {
         StartCoroutine(SpawnWaves());
@@ -27,13 +27,12 @@ public class GameController : MonoBehaviour
 
     public void UpdateScore(int newScore)
     {
-        score += newScore;
-        scoreText.text = "Score: " + score;
+		ScoreClass.score += newScore;
+		scoreText.text = "Score: " + ScoreClass.score;
     }
 
     public void EndGame()
     {
-        Debug.Log("Entrou");
         gameOverText.text = "Game Over";
         gameOver = true;
     }
@@ -60,12 +59,13 @@ public class GameController : MonoBehaviour
                 Instantiate(hazard, spawnP, spawnR);
                 yield return new WaitForSeconds(spawnWait);
             }
-            yield return new WaitForSeconds(2);
+			yield return new WaitForSeconds(1);
             if (gameOver)
             {
-                //restart = true;
 				SceneManager.LoadScene(2);
             }
+
+
             
         }
     }
