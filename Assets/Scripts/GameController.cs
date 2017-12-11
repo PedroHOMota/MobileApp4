@@ -63,8 +63,8 @@ public class GameController : MonoBehaviour
             yield return new WaitForSeconds(2);
             if (gameOver)
             {
-                restart = true;
-                restartText.text = "Press P to restart";
+                //restart = true;
+				SceneManager.LoadScene(2);
             }
             
         }

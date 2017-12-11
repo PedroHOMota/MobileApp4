@@ -34,11 +34,7 @@ public class MenuScript : MonoBehaviour
 		form.AddField("userscore", "123456");
 
 		
-		/*List<IMultipartFormSection> formData = new List<IMultipartFormSection> ();
-		formData.Add (new MultipartFormDataSection ("username=pedro&userscore=20"));*/
 		UnityWebRequest www = UnityWebRequest.Post ("localhost:8080/uploadScores",form);
-		//UnityWebRequest www = UnityWebRequest.Get
-		Debug.Log("Chegou aqui 3");
 		www.Send();
 
 		Debug.Log("Chamou");
