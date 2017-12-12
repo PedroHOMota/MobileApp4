@@ -21,7 +21,9 @@ public class MenuScript : MonoBehaviour
 		if (ipF != null) //If null it means that the current scene is the main menu
 						 // So there isn't any leaderboard to load
 		{
-			//GetLeaderboard ();
+			
+			ipF=ipF.GetComponent<InputField>();
+			StartCoroutine(GetLeaderboard ());
 		}
 	}
     public void StartLevel() 
@@ -33,19 +35,32 @@ public class MenuScript : MonoBehaviour
 		Debug.Log("Chamou");
         Application.Quit(); //Exits the game
     }
-	public void GetLeaderboard()//make a query to the webapi and loads the json 
+
+	IEnumerator GetLeaderboard()//make a query to the webapi and loads the json 
 	{
-		UnityWebRequest www = UnityWebRequest.Get ("localhost:8080/uploadScores"); 
-		leaderboradText.text = ipF.text;
+		UnityWebRequest www = UnityWebRequest.Get("http://unitygame.pythonanywhere.com/GetScores");
+		yield return www.Send();
 
 		if(www.isNetworkError) {
             Debug.Log(www.error);
         }
-        else {
+        else 
+		{
+			
             // Show results as text
-            Debug.Log(www.downloadHandler.text);
- 
+			string json = www.downloadHandler.text;
+			Debug.Log (json);
+			json ="{ \"infos\" : "+json+" }";
+			Debug.Log (json);
+			UserInfoCollection lInfo = JsonUtility.FromJson<UserInfoCollection>(json);
+			Debug.Log (lInfo.infos [0].username);
+			for (int i = 0; i < lInfo.infos.Length; i++) 
+			{
+				Debug.Log (lInfo.infos [i].username + "\t" + lInfo.infos [i].score);
+				leaderboradText.text +=lInfo.infos[i].username +"\t"+lInfo.infos[i].score+"\n";
+			}
             //byte[] results = www.downloadHandler.data;
+			//Debug.Log (results [0]);
         }
 	}
 
