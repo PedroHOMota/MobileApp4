@@ -77,7 +77,7 @@ public class MenuScript : MonoBehaviour
 		UnityWebRequest www = UnityWebRequest.Post ("http://unitygame.pythonanywhere.com/uploadScores",form);
 		www.Send();
 		Debug.Log("Enviou");
-		//StartLevel();
+		StartLevel();
 	}
 
 }

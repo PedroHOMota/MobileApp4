@@ -13,12 +13,13 @@ public class GameController : MonoBehaviour
     public GUIText scoreText;
 
     private bool gameOver, restart;
-    
+	private int lowerBound, upperBound; // used to control which hazards will be spawned
     void Start ()
     {
         StartCoroutine(SpawnWaves());
         UpdateScore(0);
-
+		lowerBound = 0;
+		upperBound = hazards.Length - 2; //limit to spawn only asteroids at first 
         gameOver = false;
 
     }
@@ -41,7 +42,7 @@ public class GameController : MonoBehaviour
                                             // So the player will have time to settle 
 		while (!gameOver) { //Making waves
 			for (int i = 0; i < spawnCount; i++) {
-				GameObject hazard = hazards [Random.Range (0, 3)];
+				GameObject hazard = hazards [Random.Range (0, hazards.Length)];
 				Vector3 spawnP = new Vector3 (Random.Range (-spawnValues.x, spawnValues.x), 0, spawnValues.z); //Generates a random spawnpoint inside game area
 				Quaternion spawnR = Quaternion.identity;
 				Instantiate (hazard, spawnP, spawnR);
