@@ -21,7 +21,7 @@ public class MenuScript : MonoBehaviour
 		if (ipF != null) //If null it means that the current scene is the main menu
 						 // So there isn't any leaderboard to load
 		{
-			GetLeaderboard ();
+			//GetLeaderboard ();
 		}
 	}
     public void StartLevel() 
@@ -59,10 +59,10 @@ public class MenuScript : MonoBehaviour
 		form.AddField("userscore", ScoreClass.score);
 
 		
-		UnityWebRequest www = UnityWebRequest.Post ("localhost:8080/uploadScores",form);
+		UnityWebRequest www = UnityWebRequest.Post ("http://unitygame.pythonanywhere.com/uploadScores",form);
 		www.Send();
-
-		StartLevel();
+		Debug.Log("Enviou");
+		//StartLevel();
 	}
 
 }
